@@ -4,6 +4,8 @@ I made this project as a submission for the frontend intern role at [codemate.ai
 
 I have basically implemented file upload functionality with firebase storage as the backend and then I display all the uploaded files to the user on the download page that can be accessed by clicking the generate report button. The user can upload multiple files as well. 
 
+You can visit the hosted site [here](https://mihir-codemate-ai.netlify.app/) 
+
 I still have to implement the functionality where I make use of the piston API to execute the uploaded code files and return their result in the form of a generated pdf. 
 
 ## To get started
