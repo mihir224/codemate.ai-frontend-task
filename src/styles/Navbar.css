@@ -1,0 +1,16 @@
+#navbar{
+    color:rgba(255, 255, 255, 0.95);
+    padding:0 30px;
+    background-color:  #11697be8;
+    display: flex;
+    align-items: center;
+    gap:10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  #logo-text{
+
+    font-size: 28px;  
+    font-family: 'Fira Sans';
+    font-weight: 700;
+  }
+  
