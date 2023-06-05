@@ -6,8 +6,10 @@ import axios from 'axios';
 
 function Download(){
     const [fileList,setFileList]=useState([]);
+    const [isLoading,setIsLoading]=useState(false);
     const fileListRef=ref(storage,'/uploads');
     useEffect(()=>{
+        setIsLoading(true);
         (async()=>{
             try{
                 const res=await listAll(fileListRef);
@@ -16,18 +18,18 @@ function Download(){
                    const response=await getMetadata(item);
                    setFileList((prev)=>[...prev,response])
                 })
-                
+                setIsLoading(false);
             }catch(err){
                 console.log(err);
             }
         })();
-
     },[])
-    useEffect(()=>{
+
+useEffect(()=>{
        console.log(fileList)
     },[fileList])
 
-    return(
+    return isLoading?<h2 style={{opacity:'0.9',textAlign:'center'}}>Loading...</h2>:(
         <div id='download'>
             <div className='grid-container' id='grid-container-col'>
                 <div className='col'>Uploaded File</div>
