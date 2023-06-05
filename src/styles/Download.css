@@ -2,7 +2,6 @@
     display:grid;
     grid-template-columns: repeat(2,1fr);
     text-align: center;
-   
 }
 #grid-container-col{
     margin:30px 300px 0px 300px;
@@ -22,6 +21,19 @@
     border:1px solid rgba(0, 0, 0, 0.5);
     padding: 5px;
     font-weight: 500;
+}
+#uploaded-file-link{
+    text-decoration: none;
+    color:inherit;
+}
+#uploaded-file-link:hover{
+    text-decoration: underline
+}
+#report-text{
+    cursor: pointer;
+}
+#report-text:hover{
+    text-decoration: underline;
 }
 
 @media screen and (max-width:1200px) {
