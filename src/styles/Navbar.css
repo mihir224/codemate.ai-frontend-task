@@ -13,4 +13,10 @@
     font-family: 'Fira Sans';
     font-weight: 700;
   }
+  @media screen and (max-width:1200px) {
+    #navbar{
+     justify-content: center;
+    }
+}
+
   
