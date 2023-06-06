@@ -22,9 +22,11 @@
     padding: 5px;
     font-weight: 500;
 }
+
 #uploaded-file-link{
     text-decoration: none;
     color:inherit;
+    cursor: pointer;
 }
 #uploaded-file-link:hover{
     text-decoration: underline

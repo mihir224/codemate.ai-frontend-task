@@ -17,13 +17,15 @@ function Download(){
             try{
                 const res=await listAll(fileListRef);
                 console.log(res)
-                res.items.forEach(async (item)=>{
-                   const response=await getMetadata(item);
-                   setFileList((prev)=>[...prev,response])
-                   const downloadUrl=await getDownloadURL(item)
-                   setDownloadUrlList((prev)=>[...prev,downloadUrl]);
-                })
+                const files = res.items.map(async (item) => {
+                    const response = await getMetadata(item);
+                    const downloadUrl = await getDownloadURL(item);
+                    return { metadata: response, downloadUrl };
+                  });
+                  const fileData = await Promise.all(files)
+                setFileList(fileData);
                 setIsLoading(false);
+                
             }catch(err){
                 console.log(err);
             }
@@ -34,14 +36,44 @@ function Download(){
        console.log(fileList)
     },[fileList])
 
-    const generateReport=()=>{
+    const generateReport=async(code)=>{
         try{
+            const result=await executeCode(code)
+            console.log(result)
             doc.text("hello",10,10)
             doc.save("a4.pdf")
         }catch(err){
             console.log(err)
         }
     }
+
+    
+const executeCode = async (code) => {
+    const url = 'https://emkc.org/api/v2/piston/execute';
+  
+    const payload = {
+      language: 'python',
+      version: '3.10.0',
+      files: [
+        {
+          name: 'hello_world.py',
+          content: code,
+        },
+      ],
+    };
+  
+    try {
+      const response = await axios.post(url, payload, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+  
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
     return isLoading?<h2 style={{opacity:'0.9',textAlign:'center'}}>Loading...</h2>:(
         <div id='download'>
@@ -52,8 +84,8 @@ function Download(){
             {fileList.map((file,index)=>{
                 return(
                     <div className='grid-container' id='grid-container-row'>
-                        <div className='row'><a id='uploaded-file-link' href={downloadUrlList[index]} target='_blank' ><span>{file?.name}</span></a></div>
-                        <div className='row'><span id='report-text' onClick={generateReport}>file-report.pdf</span></div>
+                        <div className='row'><a id='uploaded-file-link' href={downloadUrlList[index]} target='_blank' ><span>{file.metadata?.name}</span></a></div>
+                        <div className='row'><span id='report-text' onClick={()=>generateReport(file.metadata?.content)}>file-report.pdf</span></div>
                     </div>
                 )
             })}
